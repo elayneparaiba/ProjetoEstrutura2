@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct No{char* nome;
 				struct Pessoa* pessoa;
@@ -49,6 +50,37 @@ int InicializaNo (No* no, Pessoa* pessoa){
 	return 1;
 }
 
+int InsereFilho(No* no, No* novo){
+	
+	if (strcmp(no->nome,novo->nome) == 0){
+		return 0;
+	}
+	
+	if (strcmp(no->nome,novo->nome) < 0){
+		if (no->filho_esq == NULL){
+			no->filho_esq = novo;
+			
+			return 1;
+		}
+		else{
+			return InsereFilho(no->filho_esq,novo);
+		}
+	}
+	
+	if (strcmp(no->nome,novo->nome) > 0){
+		if (no->filho_dir == NULL){
+			no->filho_dir = novo;
+			
+			return 1;
+		}
+		else{
+			return InsereFilho(no->filho_dir,novo);
+		}
+	}
+	
+	return 0;
+}
+
 int InsereNo(ArvoreB* arvore, No* no){
 	
 	if (arvore->raiz == NULL){
@@ -61,13 +93,6 @@ int InsereNo(ArvoreB* arvore, No* no){
 
 	return 1;
 }
-
-/*int InsereFilho(No* no, No* novo){
-	
-	if ()
-
-	return 1;
-}*/
 
 int main()
 {
