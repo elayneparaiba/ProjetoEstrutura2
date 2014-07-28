@@ -50,7 +50,27 @@ int InicializaNo (No* no, Pessoa* pessoa){
 	return 1;
 }
 
-int InsereFilho(No* no, No* novo){
+Pessoa* CriaPessoa (){
+	Pessoa* novo;
+	
+	novo = (Pessoa*) malloc(sizeof(Pessoa));
+	
+	return novo;
+}
+				
+int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){
+	
+	pessoa->nome = nome;
+	pessoa->sexo = sexo;
+	pessoa->pai = pai;
+	pessoa->irmao = NULL;
+	pessoa->conjuge = NULL;
+	pessoa->filho1 = NULL;
+	
+	return 1;
+}
+
+int InsereNoFilho(No* no, No* novo){
 	
 	if (strcmp(no->nome,novo->nome) == 0){
 		return 0;
@@ -63,7 +83,7 @@ int InsereFilho(No* no, No* novo){
 			return 1;
 		}
 		else{
-			return InsereFilho(no->filho_esq,novo);
+			return InsereNoFilho(no->filho_esq,novo);
 		}
 	}
 	
@@ -74,7 +94,7 @@ int InsereFilho(No* no, No* novo){
 			return 1;
 		}
 		else{
-			return InsereFilho(no->filho_dir,novo);
+			return InsereNoFilho(no->filho_dir,novo);
 		}
 	}
 	
@@ -89,13 +109,69 @@ int InsereNo(ArvoreB* arvore, No* no){
 		return 1;
 	}	
 	
-	InsereFilho(arvore->raiz,no);
+	return InsereNoFilho(arvore->raiz,no);
 
+}
+
+int NascePessoa(ArvoreB* arvore,int opcao){
+	No *novo;
+	Pessoa *nova_pessoa;
+	
+	char *nome = (char*) malloc(sizeof(char));
+	char sexo;
+				
+	novo = CriaNo();
+	nova_pessoa = CriaPessoa();
+	
+	printf("Informe o nome:\n");
+	scanf("%s",nome);
+	printf("Informe o sexo (F / M):\n");
+	scanf("%c",&sexo);
+	
+	if (opcao == 1){			//sem pai
+		InicializaPessoa(nova_pessoa,nome,sexo, NULL);
+		InicializaNo(novo,nova_pessoa);
+	}
+	else{
+		
+	}
 	return 1;
 }
 
 int main()
 {
+	int opcao = -1;
+	ArvoreB *arvore;
+	
+	arvore = CriaArvore();
+	
+	InicializaArvore(arvore);
+
+		
+	while(opcao != 0) {
+		//system("clear"); //se for rodar no linux
+		//system("cls"); // se for rodar no windows
+		printf("=======================ARVORE GENEALÓGICA=======================\n\n");
+		printf("1. Insere sem pai\n");
+		printf("2. Insere com pai\n");
+		printf("3. Informa casamento\n");
+		
+		scanf("%d",&opcao);
+
+		switch(opcao) {
+
+			case 1: 
+			case 2: {
+				NascePessoa(arvore,opcao);
+				break;
+			}			
+			case 3:{
+				break;
+			}
+		}
+	}
+	
+	getchar();
 	
 	return 0;
 }
