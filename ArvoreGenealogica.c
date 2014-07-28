@@ -138,6 +138,22 @@ Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){
 	return BuscaNoPessoa(arvore->raiz,nome);
 }
 
+int VerificaCasamento(Pessoa* pessoa){
+	if (pessoa->conjuge == NULL){
+		return 0;
+	}
+		
+	return 1;
+}
+
+int VerificaHomem(Pessoa* pessoa){
+	if (pessoa->sexo == 'F'){
+		return 0;
+	}
+		
+	return 1;
+}
+
 int NascePessoa(ArvoreB* arvore,int opcao){
 	No *novo;
 	Pessoa *nova_pessoa;
@@ -158,6 +174,14 @@ int NascePessoa(ArvoreB* arvore,int opcao){
 		pai = BuscaPessoa(arvore,nome_pai);
 		if (pai == NULL){
 			printf("O pai informado não está na arvore");
+			return 0;
+		}
+		if (VerificaCasamento(pai) == 0){
+			printf("Não foi possível inserir, o pai não está casado");
+			return 0;
+		}
+		if (VerificaHomem(pai) == 0){
+			printf("Não foi possível inserir, o pai não é homem");
 			return 0;
 		}
 	}
@@ -198,7 +222,6 @@ int main()
 				break;
 			}			
 			case 3:{
-				
 				break;
 			}
 		}
