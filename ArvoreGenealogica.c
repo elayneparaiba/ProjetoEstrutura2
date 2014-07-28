@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct No{char* nome;
+typedef struct No{char* nome; //Estrutura dos nos da arvore binária
 				struct Pessoa* pessoa;
 				struct No* filho_dir;
 				struct No* filho_esq;
 				} No;
 				
-typedef struct ArvoreB{No* raiz;
+typedef struct ArvoreB{No* raiz; //Estrutura da arvore binária
 				} ArvoreB;
 				
-typedef struct Pessoa{char* nome;
+typedef struct Pessoa{char* nome; //Estrutura da Pessoa com os parentescos
 				char sexo;
 				struct Pessoa* pai;
 				struct Pessoa* irmao;
@@ -19,7 +19,7 @@ typedef struct Pessoa{char* nome;
 				struct Pessoa* filho1;
 				} Pessoa;
 				
-ArvoreB* CriaArvore (){
+ArvoreB* CriaArvore (){ //Aloca espaço de memória para a árvore
 	ArvoreB* arvore;
 	
 	arvore = (ArvoreB*) malloc(sizeof(ArvoreB));
@@ -27,12 +27,12 @@ ArvoreB* CriaArvore (){
 	return arvore;
 }
 				
-int InicializaArvore (ArvoreB* arvore){
+int InicializaArvore (ArvoreB* arvore){ //Inicializa a arvore colocando o nó raiz nulo
 	arvore->raiz = NULL;
 	return 1;
 }
 
-No* CriaNo (){
+No* CriaNo (){ //Aloca espaço de memória para um nó
 	No* novo;
 	
 	novo = (No*) malloc(sizeof(No));
@@ -40,7 +40,7 @@ No* CriaNo (){
 	return novo;
 }
 				
-int InicializaNo (No* no, Pessoa* pessoa){
+int InicializaNo (No* no, Pessoa* pessoa){ //inicializa o nó colocando os valores
 	
 	no->nome = pessoa->nome;
 	no->pessoa = pessoa;
@@ -50,7 +50,7 @@ int InicializaNo (No* no, Pessoa* pessoa){
 	return 1;
 }
 
-Pessoa* CriaPessoa (){
+Pessoa* CriaPessoa (){ //aloca espaço de memória para pessoa
 	Pessoa* novo;
 	
 	novo = (Pessoa*) malloc(sizeof(Pessoa));
@@ -58,7 +58,7 @@ Pessoa* CriaPessoa (){
 	return novo;
 }
 				
-int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){
+int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inicializa uma pessoa colocando os valores
 	
 	pessoa->nome = nome;
 	pessoa->sexo = sexo;
@@ -70,13 +70,13 @@ int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){
 	return 1;
 }
 
-int InsereNoFilho(No* no, No* novo){
+int InsereNoFilho(No* no, No* novo){ //Insere o nó na posição correta
 	
 	if (strcmp(no->nome,novo->nome) == 0){
-		return 0;
+		return 0; //não é possivel inserir um nó igual
 	}
 	
-	if (strcmp(no->nome,novo->nome) < 0){
+	if (strcmp(no->nome,novo->nome) < 0){ //se o nome procurado por menor vai para a esquerda
 		if (no->filho_esq == NULL){
 			no->filho_esq = novo;
 			
@@ -87,7 +87,7 @@ int InsereNoFilho(No* no, No* novo){
 		}
 	}
 	
-	if (strcmp(no->nome,novo->nome) > 0){
+	if (strcmp(no->nome,novo->nome) > 0){ //se o nome procurado por maior vai para a direita
 		if (no->filho_dir == NULL){
 			no->filho_dir = novo;
 			
@@ -101,7 +101,7 @@ int InsereNoFilho(No* no, No* novo){
 	return 0;
 }
 
-int InsereNo(ArvoreB* arvore, No* no){
+int InsereNo(ArvoreB* arvore, No* no){ //Insere o nó na raiz para a arvore vazia
 	
 	if (arvore->raiz == NULL){
 		arvore->raiz = no;
@@ -112,7 +112,7 @@ int InsereNo(ArvoreB* arvore, No* no){
 	return InsereNoFilho(arvore->raiz,no);
 }
 
-Pessoa* BuscaNoPessoa(No* percorre,char* nome){
+Pessoa* BuscaNoPessoa(No* percorre,char* nome){ //percorre os nos da arvore para verificar se a pessoa está na arvore
 	
 	if (strcmp(percorre->nome,nome)){
 		return percorre->pessoa;
@@ -129,7 +129,7 @@ Pessoa* BuscaNoPessoa(No* percorre,char* nome){
 	return NULL;
 }
 
-Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){
+Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){ //Verifica se a pessoa procurada está na raiz
 	
 	if (arvore->raiz == NULL){
 		return NULL;
@@ -138,7 +138,7 @@ Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){
 	return BuscaNoPessoa(arvore->raiz,nome);
 }
 
-int VerificaCasamento(Pessoa* pessoa){
+int VerificaCasamento(Pessoa* pessoa){ //verifica se o pai possui um conjuge
 	if (pessoa->conjuge == NULL){
 		return 0;
 	}
@@ -146,7 +146,7 @@ int VerificaCasamento(Pessoa* pessoa){
 	return 1;
 }
 
-int VerificaHomem(Pessoa* pessoa){
+int VerificaHomem(Pessoa* pessoa){ //verifica se a pessoa informada é homem
 	if (pessoa->sexo == 'F'){
 		return 0;
 	}
@@ -154,7 +154,7 @@ int VerificaHomem(Pessoa* pessoa){
 	return 1;
 }
 
-int InsereIrmao(Pessoa* filho, Pessoa* irmao){
+int InsereIrmao(Pessoa* filho, Pessoa* irmao){ //percorre os irmaos para adicionar um novo irmão
 	if (filho->irmao == NULL){
 		filho->irmao = irmao;
 		return 1;
@@ -164,7 +164,7 @@ int InsereIrmao(Pessoa* filho, Pessoa* irmao){
 	}
 }
 
-int InserePessoaFilho (Pessoa *filho,Pessoa* pai){
+int InserePessoaFilho (Pessoa *filho,Pessoa* pai){ //insere o primeiro filho
 	if (pai->filho1 == NULL){
 		pai->filho1 = filho;
 		pai->conjuge->filho1 = filho;
@@ -175,7 +175,7 @@ int InserePessoaFilho (Pessoa *filho,Pessoa* pai){
 	}
 }
 
-int NascePessoa(ArvoreB* arvore,int opcao){
+int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	No *novo;
 	Pessoa *nova_pessoa;
 	Pessoa *pai = NULL;
@@ -189,7 +189,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){
 	printf("Informe o sexo (F / M):\n");
 	scanf("%c",&sexo);
 	
-	if (opcao == 2){     //com pai
+	if (opcao == 2){     //caso a pessoa a inserir tenha um pai
 		printf("Informe o nome pai\n");
 		scanf("%s",nome_pai);
 		pai = BuscaPessoa(arvore,nome_pai);
@@ -209,8 +209,8 @@ int NascePessoa(ArvoreB* arvore,int opcao){
 	nova_pessoa = CriaPessoa();
 	InicializaPessoa(nova_pessoa,nome,sexo,pai);
 	
-	if (pai != NULL){
-		InserePessoaFilho(nova_pessoa,pai);
+	if (pai != NULL){ //verifica se o pai não é nulo para atualizar os vinculos da nova pessoa
+		InserePessoaFilho(nova_pessoa,pai); 
 	}
 	
 	novo = CriaNo();
