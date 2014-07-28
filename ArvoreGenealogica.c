@@ -112,64 +112,61 @@ int InsereNo(ArvoreB* arvore, No* no){
 	return InsereNoFilho(arvore->raiz,no);
 }
 
-int VerificaNoPessoa(No* percorre,char* nome){
+Pessoa* BuscaNoPessoa(No* percorre,char* nome){
 	
 	if (strcmp(percorre->nome,nome)){
-		return 1;
+		return percorre->pessoa;
 	}
 	
-	if (strcmp(percorre->nome,nome) < 0){
-		return VerificaNoPessoa(percorre->filho_esq,nome);
+	if ((percorre->filho_esq != NULL) && (strcmp(percorre->nome,nome) < 0)){
+		return BuscaNoPessoa(percorre->filho_esq,nome);
 	}
 	
-	if (strcmp(percorre->nome,nome) > 0){
-		return VerificaNoPessoa(percorre->filho_dir,nome);
+	if ((percorre->filho_dir != NULL) && (strcmp(percorre->nome,nome) > 0)){
+		return BuscaNoPessoa(percorre->filho_dir,nome);
 	}
 	
-	return 0;
+	return NULL;
 }
 
-int VerificaPessoa (ArvoreB* arvore,char* nome){
+Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){
 	
 	if (arvore->raiz == NULL){
-		return 0;
+		return NULL;
 	}	
 	
-	return VerificaNoPessoa(arvore->raiz,nome);
+	return BuscaNoPessoa(arvore->raiz,nome);
 }
 
 int NascePessoa(ArvoreB* arvore,int opcao){
 	No *novo;
 	Pessoa *nova_pessoa;
 	Pessoa *pai = NULL;
-	char* nome_pai = (char*) malloc(sizeof(char));
+	char* nome_pai = (char*) malloc(sizeof(char)*45);
 	
-	char *nome = (char*) malloc(sizeof(char));
+	char *nome = (char*) malloc(sizeof(char)*45);
 	char sexo;
-				
-	novo = CriaNo();
-	nova_pessoa = CriaPessoa();
 	
 	printf("Informe o nome:\n");
 	scanf("%s",nome);
 	printf("Informe o sexo (F / M):\n");
 	scanf("%c",&sexo);
 	
-	if (opcao == 1){			//sem pai
-		InicializaPessoa(nova_pessoa,nome,sexo,pai);
-		InicializaNo(novo,nova_pessoa);
-	}
-	else{      //com pai
+	if (opcao == 2){     //com pai
 		printf("Informe o nome pai\n");
 		scanf("%s",nome_pai);
-		if (VerificaPessoa(arvore,nome_pai) == 0){
+		pai = BuscaPessoa(arvore,nome_pai);
+		if (pai == NULL){
 			printf("O pai informado não está na arvore");
 			return 0;
 		}
-		else{
-			
-		}
 	}
+	nova_pessoa = CriaPessoa();
+	InicializaPessoa(nova_pessoa,nome,sexo,pai);
+	
+	novo = CriaNo();
+	InicializaNo(novo,nova_pessoa);
+	
 	return 1;
 }
 
@@ -201,6 +198,7 @@ int main()
 				break;
 			}			
 			case 3:{
+				
 				break;
 			}
 		}
