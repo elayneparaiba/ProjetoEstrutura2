@@ -138,7 +138,7 @@ Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){ //Verifica se a pessoa procura
 	return BuscaNoPessoa(arvore->raiz,nome);
 }
 
-int VerificaCasamento(Pessoa* pessoa){ //verifica se o pai possui um conjuge
+int VerificaCasamento(Pessoa* pessoa){ //verifica se a pessoa possui um conjuge
 	if (pessoa->conjuge == NULL){
 		return 0;
 	}
@@ -221,6 +221,62 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	return 1;
 }
 
+int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arvore
+	
+	char* nome_conjuge1 = (char*) malloc(sizeof(char)*45);
+	char* nome_conjuge2 = (char*) malloc(sizeof(char)*45);
+	int sexo1,sexo2;
+	
+	printf("Informe o nome do primeiro conjuge:\n");
+	scanf("%s",nome_conjuge1);
+	printf("Informe o nome do segundo conjuge:\n");
+	scanf("%s",nome_conjuge2);
+	
+	Pessoa* conjuge1 = BuscaPessoa(arvore,nome_conjuge1);
+	Pessoa* conjuge2 = BuscaPessoa(arvore,nome_conjuge2);
+	
+	if ((conjuge1 == NULL) && (conjuge2 == NULL)){
+		printf("Não foi possível inserir pois os conjuges não estão na arvore\n");
+		return 0;
+	}
+	if (conjuge1 == NULL){
+		printf("Não foi possível inserir pois o primeiro conjuge não existe na arvore\n");
+		return 0;
+	}
+	if (conjuge2 == NULL){
+		printf("Não foi possível inserir pois o segundo conjuge não existe na arvore\n");
+		return 0;
+	}
+	
+	sexo1 = VerificaHomem(conjuge1);
+	sexo2 = VerificaHomem(conjuge2);
+	
+	if (sexo1 == sexo2){
+		printf("Não é possível realizar casamento entre pessoas do mesmo sexo");
+		return 0;
+	}
+	
+	if((VerificaCasamento(conjuge2) == 1) && (VerificaCasamento(conjuge2) == 1)){
+		printf("Não é possível realizar casamento, pois os conjuges já são casados");
+		return 0;
+	}
+	if(VerificaCasamento(conjuge1) == 1){
+		printf("Não é possível realizar casamento, pois o primeiro conjuge já é casado");
+		return 0;
+	}
+	if(VerificaCasamento(conjuge2) == 1){
+		printf("Não é possível realizar casamento, pois o segundo conjuge já é casado");
+		return 0;
+	}
+	
+	//ADICIONAR IMPEDIMENTO PARA CASAMENTOS ENTRE IRMÃOS, PAI E FILHO, E MÃE E FILHO
+	
+	conjuge1->conjuge = conjuge2;
+	conjuge2->conjuge = conjuge1;
+	
+	return 1;
+}
+
 int main()
 {
 	int opcao = -1;
@@ -238,6 +294,7 @@ int main()
 		printf("1. Insere sem pai\n");
 		printf("2. Insere com pai\n");
 		printf("3. Informa casamento\n");
+		printf("0. Sair\n");
 		
 		scanf("%d",&opcao);
 
@@ -249,6 +306,7 @@ int main()
 				break;
 			}			
 			case 3:{
+				CriaCasamento(arvore);
 				break;
 			}
 		}
