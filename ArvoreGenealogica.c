@@ -186,6 +186,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	
 	printf("Informe o nome:\n");
 	scanf("%s",nome);
+	getchar();
 	printf("Informe o sexo (F / M):\n");
 	scanf("%c",&sexo);
 	
@@ -194,15 +195,15 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 		scanf("%s",nome_pai);
 		pai = BuscaPessoa(arvore,nome_pai);
 		if (pai == NULL){
-			printf("O pai informado não está na arvore");
+			printf("O pai informado não está na arvore\n");
 			return 0;
 		}
 		if (VerificaCasamento(pai) == 0){
-			printf("Não foi possível inserir, o pai não está casado");
+			printf("Não foi possível inserir, o pai não está casado\n");
 			return 0;
 		}
 		if (VerificaHomem(pai) == 0){
-			printf("Não foi possível inserir, o pai não é homem");
+			printf("Não foi possível inserir, o pai não é homem\n");
 			return 0;
 		}
 	}
@@ -217,6 +218,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	InicializaNo(novo,nova_pessoa);
 	
 	InsereNo(arvore,novo);
+	 //VERIFICAR SE O NÓ JÁ EXISTE
 	
 	return 1;
 }
@@ -297,6 +299,7 @@ int main()
 		printf("0. Sair\n");
 		
 		scanf("%d",&opcao);
+		getchar();
 
 		switch(opcao) {
 
@@ -310,9 +313,8 @@ int main()
 				break;
 			}
 		}
+		
 	}
-	
-	getchar();
 	
 	return 0;
 }
