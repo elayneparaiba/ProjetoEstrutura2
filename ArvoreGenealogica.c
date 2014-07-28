@@ -110,12 +110,39 @@ int InsereNo(ArvoreB* arvore, No* no){
 	}	
 	
 	return InsereNoFilho(arvore->raiz,no);
+}
 
+int VerificaNoPessoa(No* percorre,char* nome){
+	
+	if (strcmp(percorre->nome,nome)){
+		return 1;
+	}
+	
+	if (strcmp(percorre->nome,nome) < 0){
+		return VerificaNoPessoa(percorre->filho_esq,nome);
+	}
+	
+	if (strcmp(percorre->nome,nome) > 0){
+		return VerificaNoPessoa(percorre->filho_dir,nome);
+	}
+	
+	return 0;
+}
+
+int VerificaPessoa (ArvoreB* arvore,char* nome){
+	
+	if (arvore->raiz == NULL){
+		return 0;
+	}	
+	
+	return VerificaNoPessoa(arvore->raiz,nome);
 }
 
 int NascePessoa(ArvoreB* arvore,int opcao){
 	No *novo;
 	Pessoa *nova_pessoa;
+	Pessoa *pai = NULL;
+	char* nome_pai = (char*) malloc(sizeof(char));
 	
 	char *nome = (char*) malloc(sizeof(char));
 	char sexo;
@@ -129,11 +156,19 @@ int NascePessoa(ArvoreB* arvore,int opcao){
 	scanf("%c",&sexo);
 	
 	if (opcao == 1){			//sem pai
-		InicializaPessoa(nova_pessoa,nome,sexo, NULL);
+		InicializaPessoa(nova_pessoa,nome,sexo,pai);
 		InicializaNo(novo,nova_pessoa);
 	}
-	else{
-		
+	else{      //com pai
+		printf("Informe o nome pai\n");
+		scanf("%s",nome_pai);
+		if (VerificaPessoa(arvore,nome_pai) == 0){
+			printf("O pai informado não está na arvore");
+			return 0;
+		}
+		else{
+			
+		}
 	}
 	return 1;
 }
