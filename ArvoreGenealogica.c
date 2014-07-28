@@ -154,6 +154,27 @@ int VerificaHomem(Pessoa* pessoa){
 	return 1;
 }
 
+int InsereIrmao(Pessoa* filho, Pessoa* irmao){
+	if (filho->irmao == NULL){
+		filho->irmao = irmao;
+		return 1;
+	}
+	else{
+		return InsereIrmao(filho->irmao,irmao);
+	}
+}
+
+int InserePessoaFilho (Pessoa *filho,Pessoa* pai){
+	if (pai->filho1 == NULL){
+		pai->filho1 = filho;
+		pai->conjuge->filho1 = filho;
+		return 1;
+	}
+	else{
+		return InsereIrmao(pai->filho1,filho);
+	}
+}
+
 int NascePessoa(ArvoreB* arvore,int opcao){
 	No *novo;
 	Pessoa *nova_pessoa;
@@ -188,8 +209,14 @@ int NascePessoa(ArvoreB* arvore,int opcao){
 	nova_pessoa = CriaPessoa();
 	InicializaPessoa(nova_pessoa,nome,sexo,pai);
 	
+	if (pai != NULL){
+		InserePessoaFilho(nova_pessoa,pai);
+	}
+	
 	novo = CriaNo();
 	InicializaNo(novo,nova_pessoa);
+	
+	InsereNo(arvore,novo);
 	
 	return 1;
 }
