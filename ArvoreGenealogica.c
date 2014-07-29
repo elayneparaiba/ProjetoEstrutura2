@@ -58,7 +58,7 @@ Pessoa* CriaPessoa (){ //aloca espaço de memória para pessoa
 	return novo;
 }
 				
-int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inicializa uma pessoa colocando os valores
+Pessoa* InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inicializa uma pessoa colocando os valores
 	
 	pessoa->nome = nome;
 	pessoa->sexo = sexo;
@@ -67,13 +67,15 @@ int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inic
 	pessoa->conjuge = NULL;
 	pessoa->filho1 = NULL;
 	
-	return 1;
+	return pessoa;
 }
 
 int InsereNoFilho(No* no, No* novo){ //Insere o nó na posição correta
 	
 	if (strcmp(no->nome,novo->nome) == 0){
-		return 0; //não é possivel inserir um nó igual
+		printf("Não é possível inserir a mesma pessoa na arvore\n");
+		return 0; 
+		//não é possivel inserir um nó igual
 	}
 	
 	if (strcmp(no->nome,novo->nome) < 0){ //se o nome procurado por menor vai para a esquerda
@@ -207,6 +209,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 			return 0;
 		}
 	}
+	
 	nova_pessoa = CriaPessoa();
 	InicializaPessoa(nova_pessoa,nome,sexo,pai);
 	
@@ -217,8 +220,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	novo = CriaNo();
 	InicializaNo(novo,nova_pessoa);
 	
-	InsereNo(arvore,novo);
-	 //VERIFICAR SE O NÓ JÁ EXISTE
+	InsereNo(arvore,novo); //a função InsereNoFilho já verifica se a pessoa já existe na arvore
 	
 	return 1;
 }
