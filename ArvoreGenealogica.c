@@ -58,7 +58,7 @@ Pessoa* CriaPessoa (){ //aloca espaço de memória para pessoa
 	return novo;
 }
 				
-Pessoa* InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inicializa uma pessoa colocando os valores
+int InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //Inicializa uma pessoa colocando os valores
 	
 	pessoa->nome = nome;
 	pessoa->sexo = sexo;
@@ -67,7 +67,7 @@ Pessoa* InicializaPessoa (Pessoa* pessoa,char* nome, char sexo, Pessoa* pai){ //
 	pessoa->conjuge = NULL;
 	pessoa->filho1 = NULL;
 	
-	return pessoa;
+	return 1;
 }
 
 int InsereNoFilho(No* no, No* novo){ //Insere o nó na posição correta
@@ -82,6 +82,7 @@ int InsereNoFilho(No* no, No* novo){ //Insere o nó na posição correta
 		if (no->filho_esq == NULL){
 			no->filho_esq = novo;
 			
+			printf("Nó inserido na arvore\n");
 			return 1;
 		}
 		else{
@@ -93,6 +94,7 @@ int InsereNoFilho(No* no, No* novo){ //Insere o nó na posição correta
 		if (no->filho_dir == NULL){
 			no->filho_dir = novo;
 			
+			printf("Nó inserido na arvore\n");
 			return 1;
 		}
 		else{
@@ -108,6 +110,7 @@ int InsereNo(ArvoreB* arvore, No* no){ //Insere o nó na raiz para a arvore vazi
 	if (arvore->raiz == NULL){
 		arvore->raiz = no;
 		
+		printf("O nó foi inserido na raiz da arvore\n");
 		return 1;
 	}	
 	
@@ -116,7 +119,8 @@ int InsereNo(ArvoreB* arvore, No* no){ //Insere o nó na raiz para a arvore vazi
 
 Pessoa* BuscaNoPessoa(No* percorre,char* nome){ //percorre os nos da arvore para verificar se a pessoa está na arvore
 	
-	if (strcmp(percorre->nome,nome)){
+	if (strcmp(percorre->nome,nome) == 0){
+		printf("Encontrou a pessoa\n");
 		return percorre->pessoa;
 	}
 	
@@ -134,6 +138,7 @@ Pessoa* BuscaNoPessoa(No* percorre,char* nome){ //percorre os nos da arvore para
 Pessoa* BuscaPessoa (ArvoreB* arvore,char* nome){ //Verifica se a pessoa procurada está na raiz
 	
 	if (arvore->raiz == NULL){
+		printf("A arvore está vazia\n");
 		return NULL;
 	}	
 	
@@ -177,11 +182,11 @@ int InserePessoaFilho (Pessoa *filho,Pessoa* pai){ //insere o primeiro filho
 	}
 }
 
-int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
+int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa e cria um no correspondente a ela na árvore binária
 	No *novo;
 	Pessoa *nova_pessoa;
 	Pessoa *pai = NULL;
-	char* nome_pai = (char*) malloc(sizeof(char)*45);
+	char *nome_pai = (char*) malloc(sizeof(char)*45);
 	
 	char *nome = (char*) malloc(sizeof(char)*45);
 	char sexo;
@@ -191,6 +196,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa
 	getchar();
 	printf("Informe o sexo (F / M):\n");
 	scanf("%c",&sexo);
+	getchar();
 	
 	if (opcao == 2){     //caso a pessoa a inserir tenha um pai
 		printf("Informe o nome pai\n");
@@ -256,16 +262,16 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 	sexo2 = VerificaHomem(conjuge2);
 	
 	if (sexo1 == sexo2){
-		printf("Não é possível realizar casamento entre pessoas do mesmo sexo");
+		printf("Não é possível realizar casamento entre pessoas do mesmo sexo\n");
 		return 0;
 	}
 	
 	if((VerificaCasamento(conjuge2) == 1) && (VerificaCasamento(conjuge2) == 1)){
-		printf("Não é possível realizar casamento, pois os conjuges já são casados");
+		printf("Não é possível realizar casamento, pois os conjuges já são casados\n");
 		return 0;
 	}
 	if(VerificaCasamento(conjuge1) == 1){
-		printf("Não é possível realizar casamento, pois o primeiro conjuge já é casado");
+		printf("Não é possível realizar casamento, pois o primeiro conjuge já é casado\n");
 		return 0;
 	}
 	if(VerificaCasamento(conjuge2) == 1){
