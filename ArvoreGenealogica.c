@@ -334,6 +334,11 @@ Pessoa* ConsultaConjuge (ArvoreB* arvore){
 	return NULL;
 }
 
+Pessoa* ConsultaFilhos (ArvoreB* arvore){
+	
+	return NULL;
+}
+
 int main()
 {
 	int opcao = -1;
@@ -379,6 +384,10 @@ int main()
 			}
 			case 4:{
 				ConsultaConjuge(arvore);
+				break;
+			}
+			case 5:{
+				ConsultaFilhos(arvore);
 				break;
 			}
 		}
