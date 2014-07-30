@@ -334,9 +334,31 @@ Pessoa* ConsultaConjuge (ArvoreB* arvore){
 	return NULL;
 }
 
-Pessoa* ConsultaFilhos (ArvoreB* arvore){
+/*Pessoa* ConsultaFilhos (ArvoreB* arvore){
 	
 	return NULL;
+}*/
+
+int ConsultaPais(ArvoreB* arvore){
+	char* nome = (char*) malloc(sizeof(char)*45);
+	
+	printf("Informa o nome da pessoa que deseja consultar:\n");
+	scanf("%s",nome);
+	getchar();
+	
+	Pessoa* pessoa = BuscaPessoa(arvore,nome);
+	
+	if (pessoa != NULL){
+		if (pessoa->pai != NULL){
+			printf("O pai da pessoa informada é %s\n",pessoa->pai->nome);
+			printf("A mãe da pessoa informada é %s\n",pessoa->pai->conjuge->nome);
+		}
+		else{
+			printf("A pessoa não possui pais");
+		}
+	}
+	
+	return 0;
 }
 
 int main()
@@ -386,8 +408,12 @@ int main()
 				ConsultaConjuge(arvore);
 				break;
 			}
-			case 5:{
+			/*case 5:{
 				ConsultaFilhos(arvore);
+				break;
+			}*/
+			case 6:{
+				ConsultaPais(arvore);
 				break;
 			}
 		}
