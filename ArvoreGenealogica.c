@@ -211,7 +211,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa e cria um no corre
 			return 0;
 		}
 		if (VerificaHomem(pai) == 0){
-			printf("Não foi possível inserir, o pai não é homem\n");
+			printf("Não foi possível inserir, o pai informado não é homem\n");
 			return 0;
 		}
 	}
@@ -231,7 +231,7 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa e cria um no corre
 	return 1;
 }
 
-int VerificaIrmao(Pessoa* pessoa1, Pessoa* pessoa2){
+int VerificaIrmao(Pessoa* pessoa1, Pessoa* pessoa2){ //Função para verificar se duas pessoas informadas são irmãos
 	if (pessoa1->pai != NULL && pessoa2->pai != NULL && pessoa1->pai == pessoa2->pai){
 		return 1;
 	}
@@ -274,16 +274,18 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 		return 0;
 	}
 	
-	if((VerificaCasamento(conjuge2) == 1) && (VerificaCasamento(conjuge2) == 1)){
-		printf("Não é possível realizar casamento, pois os conjuges já são casados\n");
-		return 0;
-	}
 	if(VerificaCasamento(conjuge1) == 1){
 		printf("Não é possível realizar casamento, pois o primeiro conjuge já é casado\n");
 		return 0;
 	}
+	
 	if(VerificaCasamento(conjuge2) == 1){
 		printf("Não é possível realizar casamento, pois o segundo conjuge já é casado");
+		return 0;
+	}
+	
+	if((VerificaCasamento(conjuge2) == 1) && (VerificaCasamento(conjuge2) == 1)){
+		printf("Não é possível realizar casamento, pois os conjuges já são casados\n");
 		return 0;
 	}
 	
@@ -296,7 +298,7 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 	/*o impedimento de casamento entre pai e filho não é verificado, pois como para criar um filho o pai tem que estar casado,
 	já cai no impedimento de pessoa já casada
 	
-	o impedimento de casamento entre mãe e filho não é verificada, pois como a mãe já vai estar casada já cai no 
+	o impedimento de casamento entre mãe e filho não é verificado, pois como a mãe já vai estar casada já cai no 
 	impedimento de pessoa já está casada*/
 	
 	conjuge1->conjuge = conjuge2;
@@ -319,6 +321,7 @@ int main()
 	while(opcao != 0) {
 		//system("clear"); //se for rodar no linux
 		//system("cls"); // se for rodar no windows
+		
 		printf("\n\n");
 		printf("=======================ARVORE GENEALÓGICA=======================\n\n");
 		printf("MÓDULO 1\n");
