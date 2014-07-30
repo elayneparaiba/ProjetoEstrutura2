@@ -157,7 +157,7 @@ int VerificaHomem(Pessoa* pessoa){ //verifica se a pessoa informada é homem
 	if (pessoa->sexo == 'F'){
 		return 0;
 	}
-		
+	
 	return 1;
 }
 
@@ -279,10 +279,15 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 		return 0;
 	}
 	
-	//ADICIONAR IMPEDIMENTO PARA CASAMENTOS ENTRE IRMÃOS, PAI E FILHO, E MÃE E FILHO
+	if (conjuge1->pai != NULL && conjuge2->pai != NULL && conjuge1->pai == conjuge2->pai){
+		printf("Não é possível realizar casamento entre irmãos");
+		return 0;
+	}
+	//ADICIONAR IMPEDIMENTO PARA CASAMENTOS ENTRE PAI E FILHO, E MÃE E FILHO
 	
 	conjuge1->conjuge = conjuge2;
 	conjuge2->conjuge = conjuge1;
+	printf("Casamento realizado\n");
 	
 	return 1;
 }
@@ -300,7 +305,9 @@ int main()
 	while(opcao != 0) {
 		//system("clear"); //se for rodar no linux
 		//system("cls"); // se for rodar no windows
+		printf("\n\n");
 		printf("=======================ARVORE GENEALÓGICA=======================\n\n");
+		printf("MÓDULO 1\n");
 		printf("1. Insere sem pai\n");
 		printf("2. Insere com pai\n");
 		printf("3. Informa casamento\n");
