@@ -367,6 +367,7 @@ int BuscaIrmaos (Pessoa* pessoa){
 	printf("A pessoa informada possui os seguintes irmaos:\n");
 	while (pessoa->irmao != NULL){
 		printf("%s",pessoa->irmao->nome);
+		pessoa = pessoa->irmao;
 	}
 	
 	return 1;
