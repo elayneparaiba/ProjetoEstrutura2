@@ -319,14 +319,16 @@ Pessoa* ConsultaConjuge (ArvoreB* arvore){
 	
 	Pessoa* pessoa = BuscaPessoa(arvore,nome);
 	
-	casada = VerificaCasamento(pessoa);
+	if (pessoa != NULL){
+		casada = VerificaCasamento(pessoa);
 	
-	if (casada == 1){
-		printf("O conjuge da pessoa informada é:\n");
-		printf("%s",pessoa->conjuge->nome);
-	}
-	else{
-		printf("A pessoa informada não possui conjuge\n");
+		if (casada == 1){
+			printf("O conjuge da pessoa informada é:\n");
+			printf("%s",pessoa->conjuge->nome);
+		}
+		else{
+			printf("A pessoa informada não possui conjuge\n");
+		}
 	}
 	
 	return NULL;
