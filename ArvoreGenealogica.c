@@ -352,13 +352,57 @@ int ConsultaPais(ArvoreB* arvore){
 		if (pessoa->pai != NULL){
 			printf("O pai da pessoa informada é %s\n",pessoa->pai->nome);
 			printf("A mãe da pessoa informada é %s\n",pessoa->pai->conjuge->nome);
+			return 1;
 		}
 		else{
-			printf("A pessoa não possui pais");
+			printf("A pessoa não possui pais informados");
+			return 0;
 		}
 	}
 	
 	return 0;
+}
+
+int BuscaIrmaos (No* percorre,char* nome_pai){
+	//int irmao;
+	
+	if (percorre->pessoa->pai->nome != NULL){
+		if (strcmp(percorre->pessoa->pai->nome,nome_pai) == 0){
+			printf("Irmãos: %s\n",percorre->pessoa->nome);
+			//irmao = 1;
+			return 1;
+		}
+	
+		if ((percorre->filho_esq != NULL) && (strcmp(percorre->pessoa->pai->nome,nome_pai) < 0)){
+			return BuscaIrmaos(percorre->filho_esq,nome_pai);
+		}
+	
+		if ((percorre->filho_dir != NULL) && (strcmp(percorre->pessoa->pai->nome,nome_pai) > 0)){
+			return BuscaIrmaos(percorre->filho_dir,nome_pai);
+		}
+	
+		printf("A pessoa informada não possui irmãos\n");
+	}
+	
+	return 0;
+}
+
+int ConsultaIrmaos(ArvoreB* arvore){
+	char* nome = (char*) malloc(sizeof(char)*45);
+	char* nome_pai = (char*) malloc(sizeof(char)*45);
+	
+	printf("Informa o nome da pessoa que deseja consultar:\n");
+	scanf("%s",nome);
+	getchar();
+	
+	Pessoa* pessoa = BuscaPessoa(arvore,nome);
+	
+	if (pessoa != NULL){
+		nome_pai = pessoa->pai->nome;
+		return BuscaIrmaos(arvore->raiz,nome_pai);
+	}
+	
+	return 1;
 }
 
 int main()
@@ -414,6 +458,10 @@ int main()
 			}*/
 			case 6:{
 				ConsultaPais(arvore);
+				break;
+			}
+			case 7:{
+				ConsultaIrmaos(arvore);
 				break;
 			}
 		}
