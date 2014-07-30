@@ -132,6 +132,7 @@ Pessoa* BuscaNoPessoa(No* percorre,char* nome){ //percorre os nos da arvore para
 		return BuscaNoPessoa(percorre->filho_dir,nome);
 	}
 	
+	printf("A pessoa informada não está na árvore\n");
 	return NULL;
 }
 
@@ -308,6 +309,29 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 	return 1;
 }
 
+Pessoa* ConsultaConjuge (ArvoreB* arvore){
+	char* nome = (char*) malloc(sizeof(char)*45);
+	int casada;
+	
+	printf("Informa o nome da pessoa que deseja consultar:\n");
+	scanf("%s",nome);
+	getchar();
+	
+	Pessoa* pessoa = BuscaPessoa(arvore,nome);
+	
+	casada = VerificaCasamento(pessoa);
+	
+	if (casada == 1){
+		printf("O conjuge da pessoa informada é:\n");
+		printf("%s",pessoa->conjuge->nome);
+	}
+	else{
+		printf("A pessoa informada não possui conjuge\n");
+	}
+	
+	return NULL;
+}
+
 int main()
 {
 	int opcao = -1;
@@ -328,6 +352,13 @@ int main()
 		printf("1. Insere sem pai\n");
 		printf("2. Insere com pai\n");
 		printf("3. Informa casamento\n");
+		printf("\n");
+		printf("MÓDULO 2\n");
+		printf("4. Consultar conjuge\n");
+		printf("5. Consultar filhos\n");
+		printf("6. Consultar pais\n");
+		printf("7. Consultar irmãos \n");
+		printf("\n");
 		printf("0. Sair\n");
 		
 		scanf("%d",&opcao);
@@ -342,6 +373,10 @@ int main()
 			}			
 			case 3:{
 				CriaCasamento(arvore);
+				break;
+			}
+			case 4:{
+				ConsultaConjuge(arvore);
 				break;
 			}
 		}
