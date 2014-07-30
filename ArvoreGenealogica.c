@@ -231,11 +231,19 @@ int NascePessoa(ArvoreB* arvore,int opcao){ //cria uma pessoa e cria um no corre
 	return 1;
 }
 
+int VerificaIrmao(Pessoa* pessoa1, Pessoa* pessoa2){
+	if (pessoa1->pai != NULL && pessoa2->pai != NULL && pessoa1->pai == pessoa2->pai){
+		return 1;
+	}
+	
+	return 0;
+}
+
 int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arvore
 	
 	char* nome_conjuge1 = (char*) malloc(sizeof(char)*45);
 	char* nome_conjuge2 = (char*) malloc(sizeof(char)*45);
-	int sexo1,sexo2;
+	int sexo1,sexo2,irmaos;
 	
 	printf("Informe o nome do primeiro conjuge:\n");
 	scanf("%s",nome_conjuge1);
@@ -279,7 +287,8 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 		return 0;
 	}
 	
-	if (conjuge1->pai != NULL && conjuge2->pai != NULL && conjuge1->pai == conjuge2->pai){
+	irmaos = VerificaIrmao(conjuge1,conjuge2);
+	if (irmaos == 1){
 		printf("Não é possível realizar casamento entre irmãos");
 		return 0;
 	}
