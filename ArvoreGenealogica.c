@@ -283,7 +283,12 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 		printf("Não é possível realizar casamento entre irmãos");
 		return 0;
 	}
-	//ADICIONAR IMPEDIMENTO PARA CASAMENTOS ENTRE PAI E FILHO, E MÃE E FILHO
+	
+	/*o impedimento de casamento entre pai e filho não é verificado, pois como para criar um filho o pai tem que estar casado,
+	já cai no impedimento de pessoa já casada
+	
+	o impedimento de casamento entre mãe e filho não é verificada, pois como a mãe já vai estar casada já cai no 
+	impedimento de pessoa já está casada*/
 	
 	conjuge1->conjuge = conjuge2;
 	conjuge2->conjuge = conjuge1;
