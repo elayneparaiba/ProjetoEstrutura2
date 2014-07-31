@@ -359,6 +359,7 @@ int ConsultaPais(ArvoreB* arvore){
 }
 
 int BuscaIrmaos (Pessoa* pai,char* nome){
+	int irmao=0;
 	Pessoa* pessoa = pai->filho1;
 	
 	while (pessoa != NULL){
@@ -368,7 +369,13 @@ int BuscaIrmaos (Pessoa* pai,char* nome){
 		else{
 			printf("Irmão: %s\n",pessoa->nome);
 			pessoa = pessoa->irmao;
+			irmao = 1;
 		}
+	}
+	
+	if (irmao == 0){
+		printf("A pessoa não possui irmãos\n");
+		return 0;
 	}
 	
 	return 1;
