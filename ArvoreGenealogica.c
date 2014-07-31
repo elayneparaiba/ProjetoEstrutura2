@@ -309,7 +309,7 @@ int CriaCasamento(ArvoreB* arvore){ //cria o casamento entre duas pessoas da arv
 	return 1;
 }
 
-Pessoa* ConsultaConjuge (ArvoreB* arvore){
+Pessoa* ConsultaConjuge (ArvoreB* arvore){ //verifica o conjuge da pessoa informada
 	char* nome = (char*) malloc(sizeof(char)*45);
 	int casada;
 	
@@ -334,7 +334,7 @@ Pessoa* ConsultaConjuge (ArvoreB* arvore){
 	return NULL;
 }
 
-int ConsultaPais(ArvoreB* arvore){
+int ConsultaPais(ArvoreB* arvore){ //verifica se a pessoa tem pais, se tiver mostra na tela
 	char* nome = (char*) malloc(sizeof(char)*45);
 	
 	printf("Informa o nome da pessoa que deseja consultar:\n");
@@ -358,7 +358,7 @@ int ConsultaPais(ArvoreB* arvore){
 	return 0;
 }
 
-int BuscaIrmaos (Pessoa* pai,char* nome){
+int BuscaIrmaos (Pessoa* pai,char* nome){ //função que recebe o pai e percorre os irmãos
 	int irmao=0;
 	Pessoa* pessoa = pai->filho1;
 	
@@ -373,7 +373,7 @@ int BuscaIrmaos (Pessoa* pai,char* nome){
 		}
 	}
 	
-	if (irmao == 0){
+	if (irmao == 0){ //como a variavel continua com o valor 0 siginifica que não listou nenhum irmão
 		printf("A pessoa não possui irmãos\n");
 		return 0;
 	}
@@ -381,7 +381,7 @@ int BuscaIrmaos (Pessoa* pai,char* nome){
 	return 1;
 }
 
-int ConsultaIrmaos(ArvoreB* arvore){
+int ConsultaIrmaos(ArvoreB* arvore){ //verifica se a pessoa informada tem pai para buscar os irmãos
 	char* nome = (char*) malloc(sizeof(char)*45);
 	
 	printf("Informa o nome da pessoa que deseja consultar:\n");
@@ -402,7 +402,7 @@ int ConsultaIrmaos(ArvoreB* arvore){
 	return 1;
 }
 
-int ConsultaFilhosPai (Pessoa* pai){
+int ConsultaFilhosPai (Pessoa* pai){ //verifica se o pai tem filhos, se sim percorre os irmãos listando casa um deles
 	
 	if (pai->filho1 == NULL){
 		printf("A pessoa informada não possui filhos");
@@ -419,7 +419,7 @@ int ConsultaFilhosPai (Pessoa* pai){
 	return 1;
 }
 
-int ConsultaFilhos(ArvoreB* arvore){
+int ConsultaFilhos(ArvoreB* arvore){  //verifica se a pessoa possui filhos
 	char* nome = (char*) malloc(sizeof(char)*45);
 	
 	printf("Informa o nome da pessoa que deseja consultar:\n");
@@ -434,11 +434,11 @@ int ConsultaFilhos(ArvoreB* arvore){
 			return 0;
 		}
 		else{
-			if (pessoa->sexo == 'M'){
+			if (pessoa->sexo == 'M'){ //caso seja homem passa para a função a mesma pessoa
 				return ConsultaFilhosPai(pessoa);
 			}
 			if (pessoa->sexo == 'F'){
-				return ConsultaFilhosPai(pessoa->conjuge);
+				return ConsultaFilhosPai(pessoa->conjuge); //caso seja mulher passa o pai para a função
 			}
 		}
 	}
@@ -472,6 +472,7 @@ int main()
 		printf("5. Consultar filhos\n");
 		printf("6. Consultar pais\n");
 		printf("7. Consultar irmãos \n");
+		printf("8. Consultar irmãos \n");
 		printf("\n");
 		printf("0. Sair\n");
 		
