@@ -334,11 +334,6 @@ Pessoa* ConsultaConjuge (ArvoreB* arvore){
 	return NULL;
 }
 
-/*Pessoa* ConsultaFilhos (ArvoreB* arvore){
-	
-	return NULL;
-}*/
-
 int ConsultaPais(ArvoreB* arvore){
 	char* nome = (char*) malloc(sizeof(char)*45);
 	
@@ -363,10 +358,11 @@ int ConsultaPais(ArvoreB* arvore){
 	return 0;
 }
 
-int BuscaIrmaos (Pessoa* pessoa){
-	printf("A pessoa informada possui os seguintes irmaos:\n");
+int BuscaIrmaos (Pessoa* pai,char* nome){ //CORRIGIR
+	Pessoa* pessoa = pai->filho1;
+	
 	while (pessoa->irmao != NULL){
-		printf("%s",pessoa->irmao->nome);
+		printf("Irmão: %s",pessoa->nome);
 		pessoa = pessoa->irmao;
 	}
 	
@@ -375,7 +371,6 @@ int BuscaIrmaos (Pessoa* pessoa){
 
 int ConsultaIrmaos(ArvoreB* arvore){
 	char* nome = (char*) malloc(sizeof(char)*45);
-	//char* nome_pai = (char*) malloc(sizeof(char)*45);
 	
 	printf("Informa o nome da pessoa que deseja consultar:\n");
 	scanf("%s",nome);
@@ -384,12 +379,55 @@ int ConsultaIrmaos(ArvoreB* arvore){
 	Pessoa* pessoa = BuscaPessoa(arvore,nome);
 	
 	if (pessoa != NULL){
-		if(pessoa->irmao == NULL){
-			printf("A pessoa informada não possui irmãos");
+		if (pessoa->pai == NULL){
+			printf("A pessoa informada não possui pais, portanto não é possível informar irmãos");
 			return 0;
 		}
-		//nome_pai = pessoa->pai->nome;
-		return BuscaIrmaos(pessoa);
+		return BuscaIrmaos(pessoa->pai,nome);
+	}
+	
+	return 1;
+}
+
+int ConsultaFilhosPai (Pessoa* pai){  //CORRIGIR
+	
+	if (pai->filho1 == NULL){
+		printf("A pessoa informada não possui filhos");
+		return 0;
+	}
+	
+	Pessoa* pessoa = pai->filho1;
+	
+	while (pessoa->irmao != NULL){
+		printf("Filho: %s",pessoa->nome);
+		pessoa = pessoa->irmao;
+	}
+	
+	return 1;
+}
+
+int ConsultaFilhos(ArvoreB* arvore){
+	char* nome = (char*) malloc(sizeof(char)*45);
+	
+	printf("Informa o nome da pessoa que deseja consultar:\n");
+	scanf("%s",nome);
+	getchar();
+	
+	Pessoa* pessoa = BuscaPessoa(arvore,nome);
+	
+	if (pessoa != NULL){
+		if (pessoa->conjuge == NULL){
+			printf("A pessoa não é casada, portanto não possui filhos");
+			return 0;
+		}
+		else{
+			if (pessoa->sexo == 'M'){
+				return ConsultaFilhosPai(pessoa);
+			}
+			if (pessoa->sexo == 'F'){
+				return ConsultaFilhosPai(pessoa->conjuge);
+			}
+		}
 	}
 	
 	return 1;
@@ -442,10 +480,10 @@ int main()
 				ConsultaConjuge(arvore);
 				break;
 			}
-			/*case 5:{
+			case 5:{
 				ConsultaFilhos(arvore);
 				break;
-			}*/
+			}
 			case 6:{
 				ConsultaPais(arvore);
 				break;
