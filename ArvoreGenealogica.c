@@ -472,7 +472,6 @@ int main()
 		printf("5. Consultar filhos\n");
 		printf("6. Consultar pais\n");
 		printf("7. Consultar irmãos \n");
-		printf("8. Consultar irmãos \n");
 		printf("\n");
 		printf("0. Sair\n");
 		
